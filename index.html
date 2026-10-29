@@ -1,0 +1,311 @@
+<title>Mikrobüroo infoturve</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,600&family=Source+Sans+3:wght@400;600&family=IBM+Plex+Mono:wght@400;600&family=Poppins:wght@700&display=swap">
+<style>
+  /* Layout: üks veerg; järjekorra plokk on linnukestega tööriist, muu on lugemine */
+  :root{
+    --paper:#FFFFFF; --surface:#F6F5F3; --surface-2:#EFEDEA;
+    --line:#E0DDD8; --line-strong:#C8C3BC;
+    --ink:#171512; --ink-2:#463F38; --muted:#6C645B;
+    --accent:#D1500F; --mark:#FF6028; --accent-soft:#FDEEE7;
+    --ok:#0E8F86; --stop:#A8201A;
+    --display:"Newsreader",Georgia,serif;
+    --body:"Source Sans 3","Segoe UI",Arial,sans-serif;
+    --mono:"IBM Plex Mono",Consolas,monospace;
+  }
+  @media (prefers-color-scheme:dark){
+    :root:not([data-theme="light"]){
+      --paper:#12100E; --surface:#1B1917; --surface-2:#24211E;
+      --line:#2E2A26; --line-strong:#463F38;
+      --ink:#F2EFEB; --ink-2:#C6BFB7; --muted:#978E84;
+      --accent:#FF7D45; --mark:#FF6028; --accent-soft:#331C11;
+      --ok:#1E9C8E; --stop:#E2706A;
+      color-scheme:dark;
+    }
+  }
+  :root[data-theme="dark"]{
+    --paper:#12100E; --surface:#1B1917; --surface-2:#24211E;
+    --line:#2E2A26; --line-strong:#463F38;
+    --ink:#F2EFEB; --ink-2:#C6BFB7; --muted:#978E84;
+    --accent:#FF7D45; --mark:#FF6028; --accent-soft:#331C11;
+    --ok:#1E9C8E; --stop:#E2706A;
+    color-scheme:dark;
+  }
+  *{box-sizing:border-box}
+  body{background:var(--paper); color:var(--ink); font-family:var(--body);
+       font-size:16px; line-height:1.6; margin:0}
+  h1,h2,h3{font-family:var(--display); font-weight:600; text-wrap:balance; margin:0}
+  p{margin:0} a{color:var(--accent)}
+  .wrap{max-width:52rem; margin:0 auto; padding-inline:16px; padding-block:0 4rem}
+
+  .brandbar{background:var(--mark); padding:1.35rem 0}
+  .brandbar .inner{max-width:52rem; margin:0 auto; padding-inline:16px; display:flex;
+                   flex-wrap:wrap; gap:1rem 2rem; align-items:center; justify-content:space-between}
+  .brandbar svg{display:block; height:46px; width:auto}
+  .brandbar .kind{font-family:var(--mono); font-size:.66rem; letter-spacing:.16em;
+                  text-transform:uppercase; color:#FFF; text-align:right; opacity:.92}
+
+  .lede{padding-block:2.5rem 0}
+  .lede h1{font-size:clamp(1.85rem,5vw,2.6rem); line-height:1.14}
+  .lede p{margin-top:1rem; color:var(--ink-2); font-size:1.05rem}
+
+  section{margin-top:3rem}
+  .eyebrow{font-family:var(--mono); font-size:.66rem; letter-spacing:.18em; text-transform:uppercase;
+           color:var(--accent); display:block; margin-bottom:.5rem}
+  h2{font-size:1.45rem; border-bottom:1px solid var(--line-strong); padding-bottom:.5rem}
+  h3{font-size:1.05rem; margin-top:1.6rem}
+  section > p, h3 + p{margin-top:1rem}
+
+  .files{display:grid; gap:1px; background:var(--line); border:1px solid var(--line); margin-top:1.5rem}
+  .files div{background:var(--paper); padding:1rem 1.15rem}
+  .files .fn{font-family:var(--mono); font-size:.82rem; color:var(--accent); word-break:break-all}
+  .files .fd{font-size:.92rem; color:var(--ink-2); margin-top:.35rem}
+
+  .rules{list-style:none; margin:1.5rem 0 0; padding:0; display:grid; gap:1px;
+         background:var(--line); border:1px solid var(--line)}
+  .rules li{background:var(--paper); padding:.95rem 1.15rem}
+  .rules .rt{font-weight:600}
+  .rules .rd{font-size:.92rem; color:var(--ink-2); margin-top:.25rem}
+
+  /* tööriist */
+  .tool{margin-top:1.5rem; border:2px solid var(--ink); background:var(--surface)}
+  .tool .head{padding:1rem 1.15rem .85rem; border-bottom:1px solid var(--line-strong);
+              display:flex; flex-wrap:wrap; gap:.5rem 1.25rem; align-items:baseline;
+              justify-content:space-between}
+  .tool .head h3{font-size:1.1rem; margin:0}
+  .tool .head .cnt{font-family:var(--mono); font-size:.85rem; color:var(--accent);
+                   font-variant-numeric:tabular-nums}
+  .steps{list-style:none; margin:0; padding:0}
+  .steps li{border-bottom:1px solid var(--line); background:var(--paper)}
+  .steps li:last-child{border-bottom:0}
+  .steps label{display:grid; grid-template-columns:1.6rem 1fr auto; gap:0 .75rem;
+               padding:.8rem 1.15rem; cursor:pointer; align-items:start}
+  .steps input{margin:.3rem 0 0; accent-color:var(--accent); width:1.05rem; height:1.05rem}
+  .steps .n{display:none}
+  .steps .t{min-width:0}
+  .steps .h{font-family:var(--mono); font-size:.72rem; color:var(--muted); white-space:nowrap;
+            padding-top:.2rem}
+  .steps input:checked ~ .t{color:var(--muted); text-decoration:line-through}
+  .tool .foot{padding:.85rem 1.15rem; border-top:1px solid var(--line-strong); font-size:.85rem;
+              color:var(--muted); display:flex; flex-wrap:wrap; gap:.75rem; align-items:center;
+              justify-content:space-between}
+  .tool .foot button{font:inherit; font-size:.82rem; padding:.3rem .7rem; cursor:pointer;
+                     border:1px dashed var(--line-strong); background:var(--paper);
+                     color:var(--muted); border-radius:2px}
+  .tool .foot button:hover{border-color:var(--accent); color:var(--accent)}
+
+  .scroll{overflow-x:auto; margin-top:1.25rem; border:1px solid var(--line)}
+  table{border-collapse:collapse; width:100%; font-size:.88rem; min-width:34rem}
+  th,td{text-align:left; padding:.6rem .8rem; border-bottom:1px solid var(--line); vertical-align:top}
+  thead th{background:var(--surface-2); font-family:var(--mono); font-size:.62rem; letter-spacing:.12em;
+           text-transform:uppercase; color:var(--ink-2); font-weight:600}
+  tbody tr:last-child td{border-bottom:0}
+  td.ref{font-family:var(--mono); font-size:.76rem; color:var(--muted)}
+  td.nm{font-weight:600; white-space:nowrap}
+
+  .stop{border-left:3px solid var(--stop); background:var(--surface); padding:1rem 1.15rem; margin-top:1.5rem}
+  .stop h3{margin:0 0 .4rem; font-family:var(--body); font-size:.98rem; font-weight:600; color:var(--stop)}
+  .stop ul{margin:.4rem 0 0; padding-left:1.1rem; font-size:.93rem}
+  .stop li{margin-top:.3rem}
+
+  .pull{border-left:3px solid var(--mark); background:var(--accent-soft);
+        padding:1rem 1.15rem; margin-top:1.5rem}
+  .pull p + p{margin-top:.6rem}
+
+  .open{display:grid; gap:1px; background:var(--line); border:1px solid var(--line); margin-top:1.5rem}
+  .open div{background:var(--paper); padding:.9rem 1.15rem}
+  .open b{display:block; font-size:.95rem}
+  .open span{display:block; font-size:.9rem; color:var(--ink-2); margin-top:.25rem}
+
+  footer{margin-top:3.5rem; border-top:2px solid var(--ink); padding-top:1.1rem;
+         font-size:.83rem; color:var(--muted)}
+  footer p + p{margin-top:.5rem}
+  footer .sig{font-family:var(--display); font-size:1rem; color:var(--ink)}
+</style>
+
+<div class="brandbar">
+  <div class="inner">
+    <svg viewBox="0 0 560 180" role="img" aria-label="TECH x LEGAL">
+      <title>TECH x LEGAL</title>
+      <g fill="#FFFFFF" font-family="Poppins, 'Source Sans 3', Arial, sans-serif" font-weight="700" letter-spacing="2">
+        <text x="0" y="76" font-size="60">TECH</text>
+        <text x="44" y="150" font-size="60">LEGAL</text>
+      </g>
+      <g transform="translate(352 22) scale(1.13)">
+        <rect x="0" y="0" width="120" height="120" rx="1.4" fill="#FFFFFF"/>
+        <polygon points="13,13 42.3,13 107,105.5 107,107 77.7,107 13,14.5" fill="#FF6028"/>
+        <polygon points="63.6,13 106,13 84.8,43" fill="#FF6028"/>
+        <polygon points="14,107 56.4,107 35.2,77" fill="#FF6028"/>
+      </g>
+    </svg>
+    <div class="kind">Mall · loe mind<br>Mikrobüroo</div>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <div class="lede">
+    <h1>Infoturbe mall advokaadibüroole, kus IT-inimest ei ole</h1>
+    <p>Eesti Advokatuuri juhatuse 18.04.2023 juhis kehtestab infoturbe kaitsemeetmed 1–20 töötajaga büroodele, kellel IT-töötajat ei ole. Kaks tühja faili ja kümme sammu, millest alustada.</p>
+  </div>
+
+  <section>
+    <span class="eyebrow">Kaks faili</span>
+    <h2>Mis sa kätte saad</h2>
+    <div class="files">
+      <div>
+        <div class="fn">Mikrobyroo_registrid_MALL.xlsx</div>
+        <div class="fd">Kümme lehte: <strong>Juhis</strong> · <strong>Eneseanalüüs</strong> (kõik 55 meedet, iga meetme kõrval tõendi lahter) · Varad · Kontod · Andmed · Teenuseosutajad · Intsidendid · Koolitused · Kalender · Juhtorganid. Eneseanalüüs on selgroog, ülejäänud lehed ongi selle tõendid.</div>
+      </div>
+      <div>
+        <div class="fn">Mikrobyroo_infoturbe_kord_MALL.docx</div>
+        <div class="fd">Kaksteist peatükki pluss Lisa A (kinnitamine) ja Lisa B (mida see kord <em>ei</em> kata). Kuus tehnilist peatükki on kokku pandud üheks tabeliks: reeglid koos mõõdetud väärtusega, mitte esseed.</div>
+      </div>
+    </div>
+    <p style="margin-top:1rem;font-size:.9rem;color:var(--muted)">Mõlemas failis on kõik täidetavad kohad <strong>[nurksulgudes]</strong>. Muud ei pea muutma. Büroo enda andmeid neis ei ole — see on kontrollitud, mitte eeldatud.</p>
+  </section>
+
+  <section>
+    <span class="eyebrow">Viis reeglit</span>
+    <h2>Kuidas seda täidetakse</h2>
+    <ol class="rules">
+      <li><span class="rt">Täida ainult nurksulud.</span><span class="rd">Kõik kohad, mis vajavad sinu otsust või andmeid, on [nurksulgudes].</span></li>
+      <li><span class="rt">Alusta lehest „Eneseanalüüs“.</span><span class="rd">55 meedet, iga meetme kõrval tõendi lahter. Sealt tuleb välja, mida üldse vaja on.</span></li>
+      <li><span class="rt">Kirjuta „ei“ julgelt.</span><span class="rd">Audit, kus kõik on „jah“, ei ole usutav. „Ei“ koos tähtajaga on parem kui „jah“ ilma tõendita.</span></li>
+      <li><span class="rt">„Kontrollimata“ ei ole „ei“.</span><span class="rd">Kui vastust kätte ei saanud — õigused puudusid, aega ei olnud — jäta staatus tühjaks ja kirjuta põhjendusse „kontrollimata“. <strong>Tühjast väljundist ei tohi teha leidu.</strong> See on auditi kõige sagedasem viga.</span></li>
+      <li><span class="rt">Tõend on mõõdetud väärtus, mitte sõna „korras“.</span><span class="rd">„Protection Status = Protection On, 30.09.2026“ on tõend. „Krüpteeritud“ ei ole.</span></li>
+    </ol>
+  </section>
+
+  <section>
+    <span class="eyebrow">Järjekord</span>
+    <h2>Kümme sammu, mis annavad 80%</h2>
+    <p>Kui aega on vähe, tee need kümme asja selles järjekorras. Ülejäänu tuleb hiljem. Kokku umbes kaheksa tundi ehk üks tööpäev — ja pärast seda on eneseanalüüsi kõige raskemad read tõendiga kaetud.</p>
+    <div class="tool">
+      <div class="head">
+        <h3>Täitmise järjekord</h3>
+        <span class="cnt" id="cnt">0 / 10 tehtud</span>
+      </div>
+      <ol class="steps" id="steps"></ol>
+      <div class="foot">
+        <span>Linnukesed jäävad sinu brauserisse. Keegi teine neid ei näe ja mina ka mitte.</span>
+        <button type="button" id="clr">Nulli linnukesed</button>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <span class="eyebrow">Piir</span>
+    <h2>Mis registrisse ei kirjutata</h2>
+    <div class="stop">
+      <h3>Kolm asja, mis ei tohi registrisse jõuda</h3>
+      <ul>
+        <li><strong>Paroolid, PIN-koodid, API-võtmed, kettakrüpteeringu taastevõtmed.</strong> Registrisse läheb ainult see, <em>et</em> võti on olemas ja <em>kus</em> seda hoitakse — mitte number. Krüpteerimata tabel taastevõtmetega on halvem kui krüpteeringu puudumine.</li>
+        <li><strong>Kliendi isikuandmed, toimikute sisu, kliendinimed.</strong> Register on seadmete ja protsesside kohta. Kliendi asja materjalid elavad mujal.</li>
+        <li><strong>Seadmete aktiveerimistunnused</strong> — Product ID, litsentsivõti.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <span class="eyebrow">Kaardistus</span>
+    <h2>Milline leht katab millise meetme</h2>
+    <div class="scroll">
+      <table>
+        <thead><tr><th>Leht</th><th>Mida ta katab</th><th>Meetmed</th></tr></thead>
+        <tbody>
+          <tr><td class="nm">Eneseanalüüs</td><td>Staatus, tõend, vastutaja, tähtaeg</td><td class="ref">kõik 55</td></tr>
+          <tr><td class="nm">Varad</td><td>Seadmed ja tarkvara ühes</td><td class="ref">4.2.1.1 · 4.2.1.3 · 4.2.1.4 · 4.1.1.8</td></tr>
+          <tr><td class="nm">Kontod</td><td>Kontod, juurdepääsuõigused, MFA, vaikekontod</td><td class="ref">4.3.1.5–6 · 4.1.1.5 · 4.2.1.11 · 4.3.2.1</td></tr>
+          <tr><td class="nm">Andmed</td><td>Klassifikatsioon, säilitustähtaeg, hävitamine, andmevood</td><td class="ref">4.1.1.2–3 · 4.1.1.6–7</td></tr>
+          <tr><td class="nm">Teenuseosutajad</td><td>Pilv, IT, raamatupidamine, AI</td><td class="ref">4.11.1.1 · 4.11.1.2</td></tr>
+          <tr><td class="nm">Intsidendid</td><td>Juhtumite logi ja teavitatavad osapooled</td><td class="ref">4.9.1.1–3</td></tr>
+          <tr><td class="nm">Koolitused</td><td>Turvateadlikkuse kirjed</td><td class="ref">4.10.1.1–9</td></tr>
+          <tr><td class="nm">Kalender</td><td>Ülevaatuste tähtajad — see leht hoiab registri elusana</td><td class="ref">—</td></tr>
+          <tr><td class="nm">Juhtorganid</td><td>Õigusteenuse osutamise kord seoses kliendi juhtorganisse kuulumisega</td><td class="ref">eraldi kohustus, 12.01.2016</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <span class="eyebrow">Mall vs TXL-i oma</span>
+    <h2>Miks mall on lühem</h2>
+    <p>TECH x LEGALi enda register on 13 lehte ja kord 16 peatükki. Mikrobüroos osa registreid sisuliselt kattub ja eraldi hoidmine toodab tööd ilma vastavust parandamata.</p>
+    <div class="scroll">
+      <table>
+        <thead><tr><th>TXL-is eraldi</th><th>Mallis koos</th><th>Miks</th></tr></thead>
+        <tbody>
+          <tr><td>Riistvara + Tarkvara</td><td class="nm">Varad</td><td>Sama küsimus: mis mul on, kas see on toe all, kas krüpteeritud</td></tr>
+          <tr><td>Kontod + Juurdepääsud</td><td class="nm">Kontod</td><td>1–3 inimese puhul on konto ja juurdepääs üks rida</td></tr>
+          <tr><td>Andmed + Andmevood</td><td class="nm">Andmed</td><td>Iga andmeliigil on mikrobüroos üks voog</td></tr>
+          <tr><td>Kuus tehnilist peatükki</td><td class="nm">Ptk 5, üks tabel</td><td>Reeglid, mitte esseed — iga rea kõrval mõõdetud väärtus</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="pull">
+      <p><strong>Lühem on ainult failide arv.</strong> Eneseanalüüsis on 55 meedet ja iga koondatud leht katab needsamad meetmenumbrid. Eneseanalüüs on kokku pandud juhise põhjal, kuid meetmete täielik joondamine juhise numeratsiooniga ei ole tehtud. Kontrolli meetmeid alati juhise kehtivast tekstist.</p>
+    </div>
+  </section>
+
+
+  <footer>
+    <p><strong>Mis see on.</strong> Mall, mitte õigusnõu. Iga büroo olukord on erinev ja vastutus juhise täitmise eest on büroo pidajal. Malli koostaja ei vastuta selle eest, kas täidetud mall vastab sinu büroo olukorras advokatuuri nõuetele. Kontrolli juhise kehtivat teksti advokatuuri lehelt.</p>
+    <p><strong>Allikas.</strong> Eesti Advokatuuri juhatuse 18.04.2023 juhis infoturbe kaitsemeetmete kohta, miinimummeetmed 1–20 töötajaga büroole ilma IT-töötajata. Tabeli meetmenumbrid on juhise numeratsioonis; eneseanalüüsi lehel on registri oma numeratsioon ja need ei klapi üks-ühele.</p>
+    <p style="margin-top:1rem"><span class="sig">Anne Marie Adamson</span><br>Vandeadvokaat · TECH x LEGAL Advokaadibüroo OÜ · techxlegal.com</p>
+  </footer>
+
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var STEPS = [
+    ["Seadmed kirja — leht „Varad“: mitu arvutit, telefoni, välist ketast", "30 min"],
+    ["Kettakrüpteering igal seadmel sisse ja kontrollitud", "1 h"],
+    ["Taastevõtmed kahte kohta, millest kumbki ei ole seade ise", "30 min"],
+    ["Operatsioonisüsteem ja rakendused tootja toe all ja uuenevad automaatselt", "vaata üle"],
+    ["Pahavaratõrje töötab ja signatuurid uuenevad", "10 min"],
+    ["MFA kõigil kontodel, mis pääsevad kliendi andmeteni — leht „Kontod“", "1–2 h"],
+    ["Varundus: vähemalt üks koopia, mis EI ole püsivalt võrgus", "1 h + ketta hind"],
+    ["Taaste proovitud — ava varukoopiast üks fail", "15 min"],
+    ["Teenuseosutajad kirja, igal kliendi andmeid töötleval andmetöötlusleping", "2 h"],
+    ["Infoturbe kord allkirjastatud ja kuupäevastatud", "30 min"]
+  ];
+  var KEY = "mikro-infoturve-sammud";
+  var done = {};
+  try { done = JSON.parse(localStorage.getItem(KEY) || "{}") || {}; } catch (e) { done = {}; }
+
+  function save(){ try { localStorage.setItem(KEY, JSON.stringify(done)); } catch (e) {} }
+
+  function esc(t){ return String(t).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+
+  function count(){
+    var n = 0, i;
+    for (i = 0; i < STEPS.length; i++) { if (done[i]) n++; }
+    document.getElementById("cnt").textContent = n + " / " + STEPS.length + " tehtud";
+  }
+
+  var host = document.getElementById("steps");
+  host.innerHTML = STEPS.map(function(s, i){
+    return '<li><label><input type="checkbox" data-i="' + i + '"' + (done[i] ? " checked" : "") + '>' +
+           '<span class="t">' + esc(s[0]) + '</span>' +
+           '<span class="h">' + esc(s[1]) + '</span></label></li>';
+  }).join("");
+
+  host.addEventListener("change", function(e){
+    var t = e.target, i = t && t.getAttribute && t.getAttribute("data-i");
+    if (i === null || i === undefined) return;
+    if (t.checked) { done[i] = true; } else { delete done[i]; }
+    save(); count();
+  });
+
+  document.getElementById("clr").addEventListener("click", function(){
+    done = {}; save();
+    var b = host.querySelectorAll('input[type="checkbox"]'), k;
+    for (k = 0; k < b.length; k++) { b[k].checked = false; }
+    count();
+  });
+
+  count();
+})();
+</script>
