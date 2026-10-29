@@ -8,8 +8,8 @@ Kaks tühja faili Eesti advokaadibüroodele, kus töötab 1–20 inimest ja IT-t
 
 Kaustas [`mall/`](mall/) on kaks faili:
 
-- `Mikrobyroo_registrid_MALL.xlsx` on Exceli register kümne lehega. Selgroog on leht „Eneseanalüüs" 55 meetmega, ülejäänud lehed (Varad, Kontod, Andmed, Teenuseosutajad, Intsidendid, Koolitused, Kalender, Juhtorganid) on selle tõendid.
-- `Mikrobyroo_infoturbe_kord_MALL.docx` on Wordi dokument, infoturbe kord kaheteistkümne peatüki ja kahe lisaga.
+- [`Mikrobyroo_registrid_MALL.xlsx`](mall/Mikrobyroo_registrid_MALL.xlsx) on Exceli register kümne lehega. Selgroog on leht „Eneseanalüüs" 55 meetmega, ülejäänud lehed (Varad, Kontod, Andmed, Teenuseosutajad, Intsidendid, Koolitused, Kalender, Juhtorganid) on selle tõendid.
+- [`Mikrobyroo_infoturbe_kord_MALL.docx`](mall/Mikrobyroo_infoturbe_kord_MALL.docx) on Wordi dokument, infoturbe kord kaheteistkümne peatüki ja kahe lisaga.
 
 Mõlemas failis on kõik täidetavad kohad oranžides `[nurksulgudes]`. Büroo enda andmeid neis ei ole.
 
@@ -25,4 +25,4 @@ See on mall, mitte õigusnõu. Advokatuuri infoturbe kaitsemeetmete juhis on soo
 
 Vigadest ja lünkadest anna teada: anne.adamson@techxlegal.com
 
-*Anne Marie Adamson, advokaat, TECH x LEGAL Advokaadibüroo OÜ*
+*Anne Marie Adamson, PhD, vandeadvokaat, TECH x LEGAL Advokaadibüroo OÜ*
