@@ -21,7 +21,7 @@ Kontrollimata ei ole „ei". Kui kontrollimisel puudusid õigused või aega ei o
 
 Tõend on mõõdetud väärtus, mitte sõna „korras". Registrisse ei kirjutata paroole, taastevõtmeid, kliendi andmeid ega seadmete aktiveerimistunnuseid.
 
-## Mis see on ja mis ei ole
+## Mis see on ja mis ei ole?
 
 See on mall, mitte õigusnõu. Advokatuuri infoturbe kaitsemeetmete juhis on soovituslik ja jääb alusdokumendiks. Mall ei ole advokatuuri dokument ega Eesti Advokatuuri IP/IT komisjoni seisukoht. Büroo vastutab ise selle eest, kuidas ta malli täidab. Eneseanalüüs on kokku pandud juhise põhjal, kuid meetmete täielik joondamine juhise numeratsiooniga ei ole tehtud, nii et kontrolli meetmeid juhise kehtivast tekstist.
 
