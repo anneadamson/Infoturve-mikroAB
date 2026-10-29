@@ -2,7 +2,7 @@
 
 Kaks tühja faili Eesti advokaadibüroodele, kus töötab 1–20 inimest ja IT-töötajat ei ole. Mallid on koostatud Eesti Advokatuuri juhatuse 18.04.2023 infoturbe kaitsemeetmete juhise alusel.
 
-**Klikitav juhis:** https://anneadamson.github.io/infoturve-mikroAB/
+**Klikitav juhis:** https://anneadamson.github.io/Infoturve-mikroAB/
 
 ## Failid
 
